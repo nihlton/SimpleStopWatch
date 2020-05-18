@@ -1,0 +1,14 @@
+@import './variables';
+
+.theme-light {
+  --background: var(--light-gray);
+  --foreground: white;
+  --copy-color: var(--darkest-gray);
+}
+
+
+.theme-dark {
+  --background: var(--darkest-gray);
+  --foreground: var(--dark-gray);
+  --copy-color: white;
+}

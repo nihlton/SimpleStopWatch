@@ -1,0 +1,46 @@
+button, .button {
+  --color1: var(--copy-color); // text color
+  --color2: var(--foreground); // background
+  --color3: var(--gray); // icon color
+  transition: background .4s;
+  cursor: pointer;
+  display: inline-block;
+  margin: .33rem;
+  white-space: pre;
+  line-height: 1;
+  padding: .6em 1em .6em;
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  color: var(--color1);
+  background: var(--color2);
+  position: relative;
+  border-radius: var(--standard-radius);
+  border: none;
+  text-decoration: none !important;
+  font-weight: 700;
+  font-family: 'Open Sans',-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  user-select: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+  &:focus,
+  &:active,
+  &:visited {
+    text-decoration: none;
+    color: var(--color);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color3) inset;
+  }
+
+  &.toggled {
+    color: var(--color2);
+    background: var(--color1);
+
+    i { color: inherit; }
+    &:focus, &:active { box-shadow: 0 0 0 2px var(--color2) inset; }
+  }
+}
