@@ -1,5 +1,7 @@
 ## Simple Stop Watch
 
+[live demo](https://nihlton.github.io/simple-stop-watch/)
+
 `yarn install`
 `yarn start`
 or
