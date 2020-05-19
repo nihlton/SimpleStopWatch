@@ -13,7 +13,10 @@ function App() {
         <h1 className='pull-left'>Stop watch demo</h1>
         <div className='pull-right'>
           {Object.entries(THEMES).map(([key, theme]) => (
-            <button className={`${activeTheme === theme.className ? 'toggled' : ''}`} onClick={() => setActiveTheme(theme.className)}>{key}</button>
+            <button
+              key={theme.className}
+              className={`${activeTheme === theme.className ? 'toggled' : ''}`}
+              onClick={() => setActiveTheme(theme.className)}>{key}</button>
           ))}
         </div>
       </header>

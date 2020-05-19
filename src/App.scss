@@ -8,14 +8,46 @@
 
   main {
     display: flex;
+    flex-wrap: wrap;
     margin: 0 calc(-1 * var(--medium-grid-unit));
-  }
 
-  section {
-    border-radius: var(--standard-radius);
-    padding: var(--large-grid-unit);
-    background-color: var(--foreground);
-    margin: var(--medium-grid-unit);
-    flex-basis: calc(50% - (2 * var(--medium-grid-unit)));
+    > section {
+      padding: var(--large-grid-unit);
+      margin: var(--medium-grid-unit);
+      border-radius: var(--standard-radius);
+      background-color: var(--foreground);
+      min-width: calc(50% - (2 * var(--medium-grid-unit)));
+    }
+  }
+}
+
+
+@media #{$small-only} {
+  .demo-app {
+    main {
+      > section {
+        min-width: calc(100% - (2 * var(--medium-grid-unit)));
+      }
+    }
+  }
+}
+
+@media #{$medium-only} {
+  .demo-app {
+    main {
+      > section {
+        min-width: calc(50% - (2 * var(--medium-grid-unit)));
+      }
+    }
+  }
+}
+
+@media #{$large-only} {
+  .demo-app {
+    main {
+      > section {
+        min-width: calc(50% - (2 * var(--medium-grid-unit)));
+      }
+    }
   }
 }

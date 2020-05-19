@@ -57,8 +57,4 @@ $standard-radius: .33rem;
   --standard-radius: #{$standard-radius};
   --standard-shadow: 0 .75rem .5rem -.5rem #0002, 0 0 0.5rem #0002;
   --floating-shadow: 0 0 1.5rem #0003, 0 0 0.25rem #0002;
-
-  --large-grid-unit: 2rem; // further theming? compact vs spacious
-  --medium-grid-unit: 1rem;
-  --small-grid-unit: .5rem;
 }
