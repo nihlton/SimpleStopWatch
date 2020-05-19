@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/simple-stop-watch/static/css/main.bb4a2f53.chunk.css",
-    "main.js": "/simple-stop-watch/static/js/main.c64b4f0b.chunk.js",
-    "main.js.map": "/simple-stop-watch/static/js/main.c64b4f0b.chunk.js.map",
+    "main.js": "/simple-stop-watch/static/js/main.ed0090d6.chunk.js",
+    "main.js.map": "/simple-stop-watch/static/js/main.ed0090d6.chunk.js.map",
     "runtime-main.js": "/simple-stop-watch/static/js/runtime-main.77afbde6.js",
     "runtime-main.js.map": "/simple-stop-watch/static/js/runtime-main.77afbde6.js.map",
     "static/js/2.46baf53c.chunk.js": "/simple-stop-watch/static/js/2.46baf53c.chunk.js",
     "static/js/2.46baf53c.chunk.js.map": "/simple-stop-watch/static/js/2.46baf53c.chunk.js.map",
     "index.html": "/simple-stop-watch/index.html",
-    "precache-manifest.7a9e68b4659d569535af60da9e64a701.js": "/simple-stop-watch/precache-manifest.7a9e68b4659d569535af60da9e64a701.js",
+    "precache-manifest.0a89e2351d755ec95eac123d82b3e1fd.js": "/simple-stop-watch/precache-manifest.0a89e2351d755ec95eac123d82b3e1fd.js",
     "service-worker.js": "/simple-stop-watch/service-worker.js",
     "static/css/main.bb4a2f53.chunk.css.map": "/simple-stop-watch/static/css/main.bb4a2f53.chunk.css.map",
     "static/js/2.46baf53c.chunk.js.LICENSE.txt": "/simple-stop-watch/static/js/2.46baf53c.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.77afbde6.js",
     "static/js/2.46baf53c.chunk.js",
     "static/css/main.bb4a2f53.chunk.css",
-    "static/js/main.c64b4f0b.chunk.js"
+    "static/js/main.ed0090d6.chunk.js"
   ]
 }
