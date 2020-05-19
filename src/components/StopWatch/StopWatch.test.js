@@ -13,7 +13,7 @@ afterEach(cleanup)
 test('provides three control buttons', () => {
   const { getByText } = render(<StopWatch />)
   const resetButton = getByText('reset')
-  const playButton = getByText('⏵')
+  const playButton = getByText('play')
   const lapButton = getByText('lap')
   expect(resetButton).toBeInTheDocument()
   expect(playButton).toBeInTheDocument()
@@ -25,11 +25,11 @@ test('starts timer when user clicks `play`',  async () => {
   const { getByText, getByTestId } = render(<StopWatch />)
   const WAIT_TIME = 1234
   
-  fireEvent.click(getByText('⏵'))
+  fireEvent.click(getByText('play'))
   
   await waitMS(WAIT_TIME)
   
-  const pauseButton = getByText('⏸')
+  const pauseButton = getByText('pause')
   const lapButton = getByText('lap')
   const displayedTime = Number(getByTestId('time-display').textContent) * 10 // tenths to milli
   
@@ -41,17 +41,17 @@ test('starts timer when user clicks `play`',  async () => {
 test('pauses timer when user clicks `pause`',  async () => {
   const { getByText, getByTestId } = render(<StopWatch />)
   
-  fireEvent.click(getByText('⏵'))
+  fireEvent.click(getByText('play'))
   
   await waitMS(TEST_WAIT_TIME)
   
-  fireEvent.click(getByText('⏸'))
+  fireEvent.click(getByText('pause'))
   
   await waitMS(TEST_WAIT_TIME)
   
   // waited N ms, clicked pause, waited another N ms.  UI should read N ms, not N+N.
   
-  const playButton = getByText('⏵')
+  const playButton = getByText('play')
   const lapButton = getByText('lap')
   const displayedTime = Number(getByTestId('time-display').textContent) * 10 // tenths to milli
   
@@ -63,19 +63,19 @@ test('pauses timer when user clicks `pause`',  async () => {
 test('resumed timer continues where it left off',  async () => {
   const { getByText, getByTestId } = render(<StopWatch />)
   
-  fireEvent.click(getByText('⏵'))
+  fireEvent.click(getByText('play'))
   
   await waitMS(TEST_WAIT_TIME)
   
-  fireEvent.click(getByText('⏸'))
+  fireEvent.click(getByText('pause'))
   
   await waitMS(TEST_WAIT_TIME)
   
-  fireEvent.click(getByText('⏵'))
+  fireEvent.click(getByText('play'))
   
   await waitMS(TEST_WAIT_TIME)
   
-  const playButton = getByText('⏸')
+  const playButton = getByText('pause')
   const lapButton = getByText('lap')
   const displayedTime = Number(getByTestId('time-display').textContent) * 10 // tenths to milli
   
@@ -88,7 +88,7 @@ test('resumed timer continues where it left off',  async () => {
 test('clicking `lap` adds a lap record',  async () => {
   const { getByText, getByTestId } = render(<StopWatch />)
   
-  fireEvent.click(getByText('⏵'))
+  fireEvent.click(getByText('play'))
   
   await waitMS(TEST_WAIT_TIME)
   fireEvent.click(getByText('lap'))
@@ -99,7 +99,7 @@ test('clicking `lap` adds a lap record',  async () => {
   await waitMS(TEST_WAIT_TIME)
   fireEvent.click(getByText('lap'))
   
-  fireEvent.click(getByText('⏸'))
+  fireEvent.click(getByText('pause'))
   
   Array.from(getByTestId('lap-records').children).reverse().forEach((lapRecord, i) => {
     const [ lapTimeDisplay, lapFromStartDisplay ] = Array.from(lapRecord.children)
@@ -114,12 +114,12 @@ test('clicking `lap` adds a lap record',  async () => {
 test('clicking `reset` should clear the time display, and the lap records',  async () => {
   const { getByText, getByTestId, queryByTestId } = render(<StopWatch />)
   
-  fireEvent.click(getByText('⏵'))
+  fireEvent.click(getByText('play'))
   
   await waitMS(TEST_WAIT_TIME)
   fireEvent.click(getByText('lap'))
   
-  fireEvent.click(getByText('⏸'))
+  fireEvent.click(getByText('pause'))
   fireEvent.click(getByText('reset'))
   
   const lapRecords = queryByTestId('lap-records')
@@ -144,13 +144,13 @@ test('calls provided handlers',  async () => {
     onReset={mockReset}
   />)
   
-  fireEvent.click(getByText('⏵'))
+  fireEvent.click(getByText('play'))
   expect(mockStart).toHaveBeenCalled()
   
   fireEvent.click(getByText('lap'))
   expect(mockLap).toHaveBeenCalled()
   
-  fireEvent.click(getByText('⏸'))
+  fireEvent.click(getByText('pause'))
   expect(mockPause).toHaveBeenCalled()
   
   fireEvent.click(getByText('reset'))
