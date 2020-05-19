@@ -1,10 +1,8 @@
 import React, { useState, useRef, FunctionComponent } from 'react'
-import {padSegments, parseTime} from "../../util/timeMethods";
-import {lapTime, StopWatchProps} from "../../constants";
+import { padSegments, parseTime } from "../../util/timeMethods";
+import { lapTime, noOp, StopWatchProps } from "../../constants";
 
 import './StopWatch.scss'
-
-const noOp = Function.prototype
 
 const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
   const { onReset = noOp, onStart = noOp, onPause = noOp, onLap = noOp} = props
@@ -91,7 +89,7 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
   }
 
   return <section className='stop-watch-component'>
-    <time className='time-display large-margin-top'>
+    <time className='time-display large-margin-top' data-testid='time-display'>
       <div ref={timeReadout} >
         <span className='seconds' >00</span>
         <span className='second-tenths'>00</span>
@@ -109,14 +107,16 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
     {lapTimes.length > 0 && <aside className='lap-times'>
       <div>
         <strong className='small-padding-bottom'>Lap times</strong>
-        {[...lapTimes].reverse()
-          .map(lap => [lap.id, parseTime(lap.time), parseTime(lap.fromStart)])
-          .map(([id, time, fromStart], i) => <div key={String(id)}>
-            #{String(lapTimes.length - i).padStart(2, '0')} -&nbsp;
-            <span>{padSegments(time as Array<number>).filter(s => s).join(':')}</span> -&nbsp;
-            <span>{padSegments(fromStart as Array<number>).filter(s => s).join(':')}</span>
-          </div>)
-        }
+        <div data-testid='lap-records'>
+          {[...lapTimes].reverse()
+            .map(lap => [lap.id, parseTime(lap.time), parseTime(lap.fromStart)])
+            .map(([id, time, fromStart], i) => <div key={String(id)}>
+              #{String(lapTimes.length - i).padStart(2, '0')} -&nbsp;
+              <span>{padSegments(time as Array<number>).filter(s => s).join(':')}</span> -&nbsp;
+              <span>{padSegments(fromStart as Array<number>).filter(s => s).join(':')}</span>
+            </div>)
+          }
+        </div>
       </div>
     </aside>}
 

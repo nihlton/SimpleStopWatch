@@ -13,7 +13,6 @@
     align-items: center;
     font-size: calc(var(--large-grid-unit) * 3);
 
-
     // time segments
     span {
       font-weight: bold;
@@ -43,7 +42,6 @@
           top: calc(100% - 2.65rem);
         }
       }
-
     }
   }
 
@@ -51,10 +49,10 @@
     display: flex;
     justify-content: center;
     margin-top: var(--large-grid-unit);
-    max-height: 7rem;
-    mask-image: linear-gradient(180deg, #000 5rem, transparent);
+    max-height: 8rem;
+    mask-image: linear-gradient(180deg, #000 4rem, transparent);
+    overflow: hidden;
   }
-
 }
 
 @media #{$small-only} {

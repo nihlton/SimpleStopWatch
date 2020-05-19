@@ -1,9 +1,12 @@
+
+export const noOp = Function.prototype
+
 export type themeDef = {
   className: string
   query?: string
 }
 
-type themeMap = {
+export type themeMap = {
   [key: string]: themeDef
 }
 
@@ -15,10 +18,10 @@ export const THEMES = {
 export const DEFAULT_THEME = THEMES.light
 
 // doesn't listen live, for simplicity sake
-export const PREFERRED_THEME = Object.values(THEMES).reduce(
-    (currentTheme: themeDef, theme: themeDef) => {
-      return theme.query && window.matchMedia(theme.query).matches ? theme : currentTheme
-    }, DEFAULT_THEME)
+export const PREFERRED_THEME = window?.matchMedia ? Object.values(THEMES).reduce(
+    (cTheme: themeDef, aTheme: themeDef) => (
+      aTheme.query && window.matchMedia(aTheme.query).matches ? aTheme : cTheme
+    ), DEFAULT_THEME) : DEFAULT_THEME
 
 export const ONE_SECOND = 1000
 export const ONE_MINUTE = ONE_SECOND * 60
