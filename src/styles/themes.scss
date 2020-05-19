@@ -4,6 +4,8 @@
   --background: var(--light-gray);
   --foreground: white;
   --copy-color: var(--darkest-gray);
+  --copy-color-semi: var(--medium-gray);
+  --accent: var(--blue);
 }
 
 
@@ -11,4 +13,6 @@
   --background: var(--darkest-gray);
   --foreground: var(--dark-gray);
   --copy-color: white;
+  --copy-color-semi: var(--medium-gray);
+  --accent: var(--orange);
 }

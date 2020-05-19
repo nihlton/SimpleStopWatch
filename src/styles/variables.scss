@@ -16,52 +16,12 @@ $sizeValues: (
 );
 
 
-$red: rgb(251, 0, 122);
-$green: rgb(154, 204, 0);
-$blue: rgb(0, 160, 204);
-$orange: rgb(231, 132, 0);
-
-$red-dark: rgb(174, 0, 72);
-$green-dark: rgb(114, 154, 0);
-$blue-dark: rgb(0, 112, 184);
-$orange-dark: rgb(214, 102, 0);
-
-$red-light: rgb(255, 50, 182);
-$green-light: rgb(194, 255, 40);
-$blue-light: rgb(40, 190, 255);
-$orange-light: rgb(255, 180, 40);
-
-$red-semi: rgba(201, 0, 142, .40);
-$green-semi: rgba(154, 204, 0, .40);
-$blue-semi: rgba(0, 160, 204, .40);
-
-
-$light-gray: #eee;
-$medium-gray: #999;
-$dark-gray: #333;
-$darkest-gray: #111;
-
-$standard-radius: .33rem;
-
 :root {
-  --red: #{$red};
-  --orange: #{$orange};
-  --green: #{$green};
-  --blue: #{$blue};
-  --red-semi: #{$red-semi};
-  --green-semi: #{$green-semi};
-  --blue-semi: #{$blue-semi};
-  --red-dark: #{$red-dark};
-  --green-dark: #{$green-dark};
-  --blue-dark: #{$blue-dark};
-  --red-light: #{$red-light};
-  --green-light: #{$green-light};
-  --blue-light: #{$blue-light};
-  --light-gray: #{$light-gray};
-  --medium-gray: #{$medium-gray};
-  --dark-gray: #{$dark-gray};
-  --darkest-gray: #{$darkest-gray};
-  --standard-radius: #{$standard-radius};
-  --standard-shadow: 0 .75rem .5rem -.5rem #0002, 0 0 0.5rem #0002;
-  --floating-shadow: 0 0 1.5rem #0003, 0 0 0.25rem #0002;
+  --orange: rgb(231, 132, 0);
+  --blue: rgb(0, 160, 204);
+  --light-gray: #eee;
+  --medium-gray:  #999;
+  --dark-gray: #333;
+  --darkest-gray: #181818;
+  --standard-radius: .33rem;
 }

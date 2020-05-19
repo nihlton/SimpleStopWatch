@@ -6,76 +6,53 @@
 }
 
 .stop-watch-component {
-  &.running {
-    .time-display {
-      .spinner {
-        animation-name: spin;
-        animation-duration: 1s;
-        animation-iteration-count: infinite;
-        animation-timing-function: linear;
+  .time-display {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-size: calc(var(--large-grid-unit) * 3);
+
+
+    // time segments
+    span {
+      font-weight: bold;
+
+      &:before { content: ':'; padding: 0 .125rem;}
+      &:empty { display: none; }
+      &:last-child {font-size: .65em;}
+
+      &:first-child,
+      &.hours {
+        &:before { content: none; }
       }
+
+      &.days {
+        // did they forget it was running??
+        width: 100%;
+        display: block;
+        font-size: 1.75em;
+        text-align: center;
+        position: relative;
+
+        &:after {
+          position: absolute;
+          content: 'DAYS';
+          font-size: 1rem;
+          color: var(--copy-color-semi);
+          top: calc(100% - 2.65rem);
+        }
+      }
+
     }
   }
 
-  .time-display {
-    position: relative;
-    margin: auto;
-    width: 75%;
-    padding-top: 75%;
-
-    > * {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-    }
-
-    time {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: calc(var(--large-grid-unit) * 2);
-
-      span{
-        font-weight: bold;
-
-        &:before { content: ':'; padding: 0 .125rem;}
-        &:empty { display: none; }
-        &:last-child {font-size: .65em;}
-        &:first-child, &.hours {
-          &:before { content: none; }
-        }
-
-        &.days {
-          // did they forget it was running??
-          display: block;
-          font-size: 1.75em;
-          margin-top: -.75em;
-
-          &:after {
-            content: 'DAYS';
-            font-size: 1rem;
-          }
-        }
-      }
-    }
-
-    .spinner {
-      border-radius: 50%;
-      box-shadow: 0 0 0 .25rem;
-
-      &:after { transform: translate(-50%, 0); }
-    }
-
-    &:after { transform: translate(-50%, calc(-100% - .25rem)) rotate(180deg); }
-    &:after, .spinner:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      width: .375rem;
-      height: .75rem;
-      background: var(--blue);
-    }
+  .lap-times {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--large-grid-unit);
+    max-height: 7rem;
+    mask-image: linear-gradient(180deg, #000 5rem, transparent);
   }
 
 }

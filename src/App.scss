@@ -2,6 +2,7 @@
 
 .demo-app {
   background-color: var(--background);
+  min-height: 100%;
   min-height: stretch;
   padding: var(--large-grid-unit);
   color: var(--copy-color);
@@ -28,6 +29,9 @@
       > section {
         min-width: calc(100% - (2 * var(--medium-grid-unit)));
       }
+      .component-section { order: 1 }
+      .event-section { order: 2 }
+
     }
   }
 }
@@ -38,6 +42,9 @@
       > section {
         min-width: calc(50% - (2 * var(--medium-grid-unit)));
       }
+      .component-section { order: 2 }
+      .event-section { order: 1 }
+
     }
   }
 }
@@ -48,6 +55,9 @@
       > section {
         min-width: calc(50% - (2 * var(--medium-grid-unit)));
       }
+      .component-section { order: 2 }
+      .event-section { order: 1 }
+
     }
   }
 }

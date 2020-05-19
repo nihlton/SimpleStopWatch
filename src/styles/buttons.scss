@@ -1,14 +1,14 @@
 button, .button {
-  --color1: var(--blue); // text color
+  --color1: var(--accent); // text color
   --color2: var(--foreground); // background
-  --color3: var(--blue); // focus color
-  transition: background .4s;
+  --color3: var(--accent); // focus color
+
   cursor: pointer;
   display: inline-block;
   margin: .33rem;
   white-space: pre;
   line-height: 1;
-  padding: .6em 1em .6em;
+  padding: .6em 1em;
   font-size: 1.125rem;
   text-transform: uppercase;
   color: var(--color1);
@@ -31,13 +31,12 @@ button, .button {
   &:active,
   &:visited {
     text-decoration: none;
-    color: var(--color);
     outline: none;
     box-shadow: 0 0 0 .125rem var(--color3) inset;
   }
 
   &.big { font-size: 1.5rem; }
-  &.small { font-size: .8rem; }
+  &.small { font-size: .8rem; padding: .8em 1em;}
 
 
   &.toggled {
@@ -51,5 +50,18 @@ button, .button {
     border-radius: 50%;
     padding: .75em;
     min-width: auto;
+  }
+
+  &.on-foreground {
+    --color2: var(--background); // background
+  }
+
+  &.disabled,
+  &[disabled] {
+    --color1: var(--copy-color-semi);
+    filter: grayscale(1);
+    background: transparent;
+    pointer-events: none;
+    box-shadow: 0 0 0 .125rem var(--color1) inset;
   }
 }

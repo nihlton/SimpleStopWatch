@@ -1,103 +1,125 @@
 import React, { useState, useRef, FunctionComponent } from 'react'
-import {ONE_DAY, ONE_HOUR, ONE_MINUTE, ONE_SECOND, ONE_YEAR} from "../../constants";
+import {padSegments, parseTime} from "../../util/timeMethods";
+import {lapTime, StopWatchProps} from "../../constants";
 
 import './StopWatch.scss'
-
-type StopWatchProps = {
-  onReset?: Function
-  onStart?: Function
-  onStop?: Function
-  onLap?: Function
-}
 
 const noOp = Function.prototype
 
 const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
-  const { onReset = noOp, onStart = noOp, onStop = noOp, onLap = noOp} = props
+  const { onReset = noOp, onStart = noOp, onPause = noOp, onLap = noOp} = props
   const [ startTime, setStartTime ] = useState(0)
+  const [ stopTime, setStopTime ] = useState(0)
   const [ isRunning, setIsRunning ] = useState(0)
-  const [ lapTimes, setLapTimes ] = useState([] as number[])
-  const [ elapsedSecond, setElapsedSecond ] = useState(0)
+  const [ lapTimes, setLapTimes ] = useState([] as lapTime[])
   const timeReadout = useRef<HTMLDivElement>(null)
 
   const displayTime = (elapsedTime: number) : void => {
     if (timeReadout.current) {
-      const days = Math.trunc((elapsedTime % ONE_YEAR) / ONE_DAY)
-      const hours = Math.trunc((elapsedTime % ONE_DAY) / ONE_HOUR)
-      const minutes = Math.trunc((elapsedTime % ONE_HOUR) / ONE_MINUTE)
-      const seconds = Math.trunc((elapsedTime % ONE_MINUTE) / ONE_SECOND)
-      const secondTenths = Math.trunc((elapsedTime % ONE_SECOND) / 100)
+      const timeSegments = parseTime(elapsedTime)
+      const [ days, hours, minutes, seconds, secondTenths ] = padSegments(timeSegments)
 
-      const timeSegments = [
-        days ? `<span class='days' >${String(days).padStart(2, '0')}</span>` : '',
-        hours ? `<span class='hours' >${String(hours).padStart(2, '0')}</span>` : '',
-        minutes ? `<span class='minutes' >${String(minutes).padStart(2, '0')}</span>` : '',
-        `<span class='seconds' >${String(seconds).padStart(2, '0')}</span>`,
-        `<span class='second-tenths' >${String(secondTenths).padStart(2, '0')}</span>`,
+      const timeSegmentMarkup = [
+        days && `<span class='days' >${days}</span>` ,
+        hours && `<span class='hours' >${hours}</span>`,
+        minutes && `<span class='minutes' >${minutes}</span>`,
+        `<span class='seconds' >${seconds}</span>`,
+        `<span class='second-tenths' >${secondTenths}</span>`,
       ]
-      timeReadout.current.innerHTML = timeSegments.join('')
+      timeReadout.current.innerHTML = timeSegmentMarkup.join('')
     }
   }
 
   const startWatch = () : void => {
-    const startTime = Date.now()
+    const newStartTime = Date.now() - (stopTime - startTime)
     const intervalId = window.setInterval(() => {
-      displayTime(Date.now() - startTime)
-    }, 100)
+      displayTime(Date.now() - newStartTime)
+    }, 10)
 
-    onStart(startTime)
-    setStartTime(startTime)
+    setStartTime(newStartTime)
     setIsRunning(intervalId)
+
+    onStart(newStartTime)
   }
 
-  const stopWatch = () : void => {
-    const elapsedTime = Date.now() - startTime
-    setElapsedSecond(Math.trunc((elapsedTime % ONE_SECOND) / 100))
+  const pauseWatch = () : void => {
+    const rightNow = Date.now()
+    const elapsedTime = rightNow - startTime
+
     window.clearInterval(isRunning)
+
+    setStopTime(rightNow)
     setIsRunning(0)
-    onStop([elapsedTime, lapTimes])
+
+    onPause(elapsedTime, lapTimes)
   }
 
   const handleToggleTime = () : void => {
     if (Boolean(isRunning)) {
-      stopWatch()
+      pauseWatch()
     } else {
       startWatch()
     }
   }
 
   const handleReset = () : void => {
-    stopWatch()
+    window.clearInterval(isRunning)
     displayTime(0)
-    setElapsedSecond(0)
+    setIsRunning(0)
+    setStartTime(0)
+    setStopTime(0)
     setLapTimes([])
+
     onReset()
   }
 
   const handleLap = () : void => {
-    const elapsedTime = Date.now() - startTime
-    const newLapTimes = [...lapTimes, elapsedTime]
-    setLapTimes(newLapTimes)
-    onLap(newLapTimes)
+    if (Boolean(isRunning)) {
+      const rightNow = Date.now()
+      const elapsedTime = rightNow - startTime
+      const lastLapEnd = lapTimes.slice(-1)[0]?.fromStart ?? 0
+      const thisLapTime = {
+        id: rightNow,
+        time: elapsedTime - lastLapEnd,
+        fromStart: elapsedTime
+      } as lapTime
+
+      const newLapTimes = [...lapTimes, thisLapTime]
+      setLapTimes(newLapTimes)
+      onLap(thisLapTime)
+    }
   }
 
-  return <section className={`stop-watch-component ${Boolean(isRunning) ? 'running' : ''}`}>
-    <div className='time-display large-margin-top'>
-      <div className='spinner' style={{ transform: `rotate(${(elapsedSecond / 10) * 360}deg)` }}/>
-      <time >
-        <div ref={timeReadout} className='time-container'>
-          <span className='seconds' >00</span>
-          <span className='second-tenths'>00</span>
-        </div>
-      </time>
-    </div>
+  return <section className='stop-watch-component'>
+    <time className='time-display large-margin-top'>
+      <div ref={timeReadout} >
+        <span className='seconds' >00</span>
+        <span className='second-tenths'>00</span>
+      </div>
+    </time>
+
     <div className='watch-controls text-center large-padding-top'>
-      <button className='small' onClick={handleReset}>reset</button>
+      <button className='small on-foreground' onClick={handleReset}>reset</button>
       <button
         onClick={handleToggleTime}
-        className={`big round ${Boolean(isRunning) ? 'toggled' : ''}`}>{Boolean(isRunning) ? '⏸' : '⏵'}</button>
-      <button className='small' onClick={handleLap}>lap</button>
+        className={`big round on-foreground ${Boolean(isRunning) ? 'toggled' : ''}`}>{Boolean(isRunning) ? '⏸' : '⏵'}</button>
+      <button className='small on-foreground' onClick={handleLap} disabled={!Boolean(isRunning)}>lap</button>
     </div>
+
+    {lapTimes.length > 0 && <aside className='lap-times'>
+      <div>
+        <strong className='small-padding-bottom'>Lap times</strong>
+        {[...lapTimes].reverse()
+          .map(lap => [lap.id, parseTime(lap.time), parseTime(lap.fromStart)])
+          .map(([id, time, fromStart], i) => <div key={String(id)}>
+            #{String(lapTimes.length - i).padStart(2, '0')} -&nbsp;
+            <span>{padSegments(time as Array<number>).filter(s => s).join(':')}</span> -&nbsp;
+            <span>{padSegments(fromStart as Array<number>).filter(s => s).join(':')}</span>
+          </div>)
+        }
+      </div>
+    </aside>}
+
   </section>
 }
 
