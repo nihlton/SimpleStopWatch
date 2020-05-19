@@ -27,7 +27,9 @@ html, body, #root {
 
 @media #{$small-only} {
   html, body, #root {
-    --large-grid-unit: 1rem; // further theming? compact vs spacious
+    --xx-large-grid-unit: 4rem; // further theming? compact vs spacious
+    --x-large-grid-unit: 2rem;
+    --large-grid-unit: 1rem;
     --medium-grid-unit: .5rem;
     --small-grid-unit: .25rem;
   }
@@ -35,14 +37,18 @@ html, body, #root {
 
 @media #{$medium-only} {
   html, body, #root {
-    --large-grid-unit: 2rem;
-    --medium-grid-unit: 1rem;
-    --small-grid-unit: .5rem;
+    --xx-large-grid-unit: 6rem;
+    --x-large-grid-unit: 3rem;
+    --large-grid-unit: 1.5rem;
+    --medium-grid-unit: .75rem;
+    --small-grid-unit: .375rem;
   }
 }
 
 @media #{$large-only} {
   html, body, #root {
+    --xx-large-grid-unit: 8rem;
+    --x-large-grid-unit: 4rem;
     --large-grid-unit: 2rem;
     --medium-grid-unit: 1rem;
     --small-grid-unit: .5rem;

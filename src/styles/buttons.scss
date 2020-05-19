@@ -1,5 +1,5 @@
 button, .button {
-  --color1: var(--copy-color); // text color
+  --color1: var(--blue); // text color
   --color2: var(--foreground); // background
   --color3: var(--blue); // focus color
   transition: background .4s;
@@ -19,10 +19,12 @@ button, .button {
   text-decoration: none !important;
   font-weight: 700;
   font-family: 'Open Sans',-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  min-width: 4.5rem;
   max-width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
   user-select: none;
+
 
   &:hover { text-decoration: none; }
   &:focus,
@@ -34,10 +36,20 @@ button, .button {
     box-shadow: 0 0 0 .125rem var(--color3) inset;
   }
 
+  &.big { font-size: 1.5rem; }
+  &.small { font-size: .8rem; }
+
+
   &.toggled {
     color: var(--color2);
     background: var(--color1);
 
     &:focus, &:active { box-shadow: 0 0 0 .125rem var(--color3) inset; }
+  }
+
+  &.round {
+    border-radius: 50%;
+    padding: .75em;
+    min-width: auto;
   }
 }

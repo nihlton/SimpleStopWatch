@@ -6,7 +6,14 @@ $large-only: "(min-width: #{map-get($breaks, large)})";
 
 $boxProps: padding, margin;
 $sides: top, bottom, left, right;
-$sizeValues: (no: 0rem, small: .125rem, medium: .5rem, large: 1rem, x-large: 2rem, xx-large: 4rem);
+$sizeValues: (
+  no: 0,
+  small: #{'var(--small-grid-unit)'},
+  medium: #{'var(--medium-grid-unit)'},
+  large:#{'var(--large-grid-unit)'},
+  x-large:#{'var(--x-large-grid-unit)'},
+  xx-large:#{'var(--xx-large-grid-unit)'},
+);
 
 
 $red: rgb(251, 0, 122);

@@ -7,3 +7,27 @@
   clear: both;
   display: table;
 }
+
+.text-center { text-align: center }
+.text-left { text-align: left }
+.text-right { text-align: right }
+
+// utility classes for padding / margin
+@each $boxProp in $boxProps {
+  @each $sizeName, $sizeValue in $sizeValues {
+    .#{$sizeName}-#{$boxProp} {
+      #{$boxProp}: $sizeValue !important;
+    }
+  }
+}
+
+// utility classes for padding / margin
+@each $boxProp in $boxProps {
+  @each $side in $sides {
+    @each $sizeName, $sizeValue in $sizeValues {
+      .#{$sizeName}-#{$boxProp}-#{$side} {
+        #{$boxProp}-#{$side}: $sizeValue !important;
+      }
+    }
+  }
+}

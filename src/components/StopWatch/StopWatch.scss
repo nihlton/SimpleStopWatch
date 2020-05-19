@@ -6,7 +6,6 @@
 }
 
 .stop-watch-component {
-
   &.running {
     .time-display {
       .spinner {
@@ -17,6 +16,7 @@
       }
     }
   }
+
   .time-display {
     position: relative;
     margin: auto;
@@ -38,11 +38,23 @@
       span{
         font-weight: bold;
 
-        &:before { content: ':'; padding: 0 .25rem;}
+        &:before { content: ':'; padding: 0 .125rem;}
         &:empty { display: none; }
         &:last-child {font-size: .65em;}
-        &:first-child {
+        &:first-child, &.hours {
           &:before { content: none; }
+        }
+
+        &.days {
+          // did they forget it was running??
+          display: block;
+          font-size: 1.75em;
+          margin-top: -.75em;
+
+          &:after {
+            content: 'DAYS';
+            font-size: 1rem;
+          }
         }
       }
     }
@@ -60,9 +72,9 @@
       position: absolute;
       top: 0;
       left: 50%;
-      width: .25rem;
-      height: .5rem;
-      background: var(--copy-color);
+      width: .375rem;
+      height: .75rem;
+      background: var(--blue);
     }
   }
 
