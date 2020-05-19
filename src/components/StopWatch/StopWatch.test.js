@@ -12,7 +12,7 @@ afterEach(cleanup)
 
 test('provides three control buttons', () => {
   const { getByText } = render(<StopWatch />)
-  const resetButton = getByText(/reset/i)
+  const resetButton = getByText('reset')
   const playButton = getByText('⏵')
   const lapButton = getByText('lap')
   expect(resetButton).toBeInTheDocument()

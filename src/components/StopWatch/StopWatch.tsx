@@ -1,6 +1,6 @@
 import React, { useState, useRef, FunctionComponent } from 'react'
-import { padSegments, parseTime } from "../../util/timeMethods";
-import { lapTime, noOp, StopWatchProps } from "../../constants";
+import { padSegments, parseTime } from '../../util/timeMethods'
+import { lapTime, noOp, StopWatchProps } from '../../constants'
 
 import './StopWatch.scss'
 
@@ -14,8 +14,7 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
 
   const displayTime = (elapsedTime: number) : void => {
     if (timeReadout.current) {
-      const timeSegments = parseTime(elapsedTime)
-      const [ days, hours, minutes, seconds, secondTenths ] = padSegments(timeSegments)
+      const [ days, hours, minutes, seconds, secondTenths ] = padSegments(parseTime(elapsedTime))
 
       const timeSegmentMarkup = [
         days && `<span class='days' >${days}</span>` ,
