@@ -52,6 +52,12 @@
     max-height: 8rem;
     mask-image: linear-gradient(180deg, #000 4rem, transparent);
     overflow: hidden;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+    }
   }
 }
 

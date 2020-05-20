@@ -1,6 +1,7 @@
 import React, { useState, useRef, FunctionComponent } from 'react'
 import { padSegments, parseTime } from '../../util/timeMethods'
 import { lapTime, noOp, StopWatchProps } from '../../constants'
+import transText from '../../i18n'
 
 import './StopWatch.scss'
 
@@ -88,7 +89,7 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
   }
 
   return <section className='stop-watch-component'>
-    <time className='time-display large-margin-top' data-testid='time-display'>
+    <time className='time-display large-margin-top' role='timer' >
       <div ref={timeReadout} >
         <span className='seconds' >00</span>
         <span className='second-tenths'>00</span>
@@ -96,32 +97,31 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
     </time>
 
     <div className='watch-controls text-center large-padding-top'>
-      <button className='small on-foreground' onClick={handleReset}>reset</button>
+      <button className='small on-foreground' onClick={handleReset}>{transText.reset}</button>
       <button
         onClick={handleToggleTime}
         className={`round on-foreground ${Boolean(isRunning) ? 'toggled' : ''}`}>
         {Boolean(isRunning) ? <i className='fa fa-pause' /> : <i className='fa fa-play' />}
-        {Boolean(isRunning) ? <span className='sr-only'>pause</span> : <span className='sr-only'>play</span>}
+        {Boolean(isRunning) ? <span className='sr-only'>{transText.pause}</span> : <span className='sr-only'>{transText.play}</span>}
       </button>
-      <button className='small on-foreground' onClick={handleLap} disabled={!Boolean(isRunning)}>lap</button>
+      <button className='small on-foreground' onClick={handleLap} disabled={!Boolean(isRunning)}>{transText.lap}</button>
     </div>
 
     {lapTimes.length > 0 && <aside className='lap-times'>
       <div>
-        <strong className='small-padding-bottom'>Lap times</strong>
-        <div data-testid='lap-records'>
+        <strong className='small-padding-bottom'>{transText.lapTimes}</strong>
+        <ul>
           {[...lapTimes].reverse()
             .map(lap => [lap.id, parseTime(lap.time), parseTime(lap.fromStart)])
-            .map(([id, time, fromStart], i) => <div key={String(id)}>
+            .map(([id, time, fromStart], i) => <li key={String(id)}>
               #{String(lapTimes.length - i).padStart(2, '0')} -&nbsp;
               <span>{padSegments(time as Array<number>).filter(s => s).join(':')}</span> -&nbsp;
               <span>{padSegments(fromStart as Array<number>).filter(s => s).join(':')}</span>
-            </div>)
+            </li>)
           }
-        </div>
+        </ul>
       </div>
     </aside>}
-
   </section>
 }
 

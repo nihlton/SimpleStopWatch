@@ -52,7 +52,6 @@ function App() {
             onReset={handleReset}
           />
         </section>
-
       </main>
     </div>
   )
