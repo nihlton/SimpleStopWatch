@@ -6,6 +6,13 @@
 }
 
 .stop-watch-component {
+  position: relative;
+
+  .speak-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
   .time-display {
     display: flex;
     flex-wrap: wrap;

@@ -1,20 +1,24 @@
 import React, { useState, useRef, FunctionComponent } from 'react'
-import { padSegments, parseTime } from '../../util/timeMethods'
+import { padSegments, parseTime } from '../../util/timeUtils'
 import { lapTime, noOp, StopWatchProps } from '../../constants'
 import transText from '../../i18n'
+import { supportsSpeechSynthesis, utter } from '../../util/speechUtils'
 
 import './StopWatch.scss'
 
 const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
   const { onReset = noOp, onStart = noOp, onPause = noOp, onLap = noOp} = props
+  const [ speakTime, setSpeakTime ] = useState(false)
   const [ startTime, setStartTime ] = useState(0)
   const [ stopTime, setStopTime ] = useState(0)
   const [ isRunning, setIsRunning ] = useState(0)
   const [ lapTimes, setLapTimes ] = useState([] as lapTime[])
-  const timeReadout = useRef<HTMLDivElement>(null)
+  const displayTimeRef = useRef<HTMLDivElement>(null)
+  const readTimeRef = useRef<HTMLDivElement>(null)
+  const readLapRef = useRef<HTMLDivElement>(null)
 
   const displayTime = (elapsedTime: number) : void => {
-    if (timeReadout.current) {
+    if (displayTimeRef.current) {
       const [ days, hours, minutes, seconds, secondTenths ] = padSegments(parseTime(elapsedTime))
 
       const timeSegmentMarkup = [
@@ -24,7 +28,7 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
         `<span class='seconds' >${seconds}</span>`,
         `<span class='second-tenths' >${secondTenths}</span>`,
       ]
-      timeReadout.current.innerHTML = timeSegmentMarkup.join('')
+      displayTimeRef.current.innerHTML = timeSegmentMarkup.join('')
     }
   }
 
@@ -48,6 +52,8 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
 
     setStopTime(rightNow)
     setIsRunning(0)
+    displayTime(elapsedTime)
+    readTime(elapsedTime)
 
     onPause(elapsedTime, lapTimes)
   }
@@ -76,21 +82,59 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
       const rightNow = Date.now()
       const elapsedTime = rightNow - startTime
       const lastLapEnd = lapTimes.slice(-1)[0]?.fromStart ?? 0
+      const thisLapDuration = elapsedTime - lastLapEnd
       const thisLapTime = {
         id: rightNow,
-        time: elapsedTime - lastLapEnd,
+        time: thisLapDuration,
         fromStart: elapsedTime
       } as lapTime
 
-      const newLapTimes = [...lapTimes, thisLapTime]
-      setLapTimes(newLapTimes)
+      readLap(thisLapDuration)
+      setLapTimes([...lapTimes, thisLapTime])
+
       onLap(thisLapTime)
     }
   }
 
+  const readTime = (elapsedTime : number) : void => {
+    const timeLanguage = timeToLanguage(elapsedTime)
+    if (readTimeRef.current) {
+      readTimeRef.current.innerHTML = timeLanguage
+    }
+    if (speakTime && supportsSpeechSynthesis) { utter(timeLanguage) }
+  }
+
+  const readLap = (elapsedTime : number) : void => {
+    const lapLanguage = `${transText.lap} ${lapTimes.length + 1}, ${timeToLanguage(elapsedTime)}`
+    if (readLapRef.current) {
+      readLapRef.current.innerHTML = lapLanguage
+    }
+    if (speakTime && supportsSpeechSynthesis) { utter(lapLanguage) }
+  }
+
+  const timeToLanguage = (elapsedTime : number) : string => {
+    const [ days, hours, minutes, seconds, secondTenths ] = parseTime(elapsedTime)
+    const daysLang = days ? `${days} ${days > 1 ? transText.days : transText.day}` : ''
+    const hoursLang = hours ? `${hours} ${hours > 1 ? transText.hours : transText.hour}` : ''
+    const minutesLang = minutes ? `${minutes} ${minutes > 1 ? transText.minutes : transText.minute}` : ''
+    const secondsLang = seconds || secondTenths ? `${seconds} point ${secondTenths}  ${transText.seconds}` : ''
+
+    return [daysLang, hoursLang, minutesLang, secondsLang].filter(ts => ts).join(', ')
+  }
+
   return <section className='stop-watch-component'>
+    <div ref={readTimeRef} className='sr-only' aria-live='assertive'/>
+    <div ref={readLapRef} className='sr-only' aria-live='assertive'/>
+
+    {supportsSpeechSynthesis && <button
+      className='speak-toggle'
+      onClick={() => setSpeakTime(!speakTime)}>
+      {speakTime ? <i className='fa fa-volume-up' /> : <i className='fa fa-volume-off' />}
+      <span className='sr-only'>toggle speech synthesis</span>
+    </button>}
+
     <time className='time-display large-margin-top' role='timer' >
-      <div ref={timeReadout} >
+      <div ref={displayTimeRef} >
         <span className='seconds' >00</span>
         <span className='second-tenths'>00</span>
       </div>
