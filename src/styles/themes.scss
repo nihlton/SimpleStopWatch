@@ -5,9 +5,8 @@
   --foreground: white;
   --copy-color: var(--darkest-gray);
   --copy-color-semi: var(--medium-gray);
-  --accent: var(--blue);
+  --accent: var(--blue); // further theming?  set accent separately from light/dark
 }
-
 
 .theme-dark {
   --background: var(--darkest-gray);

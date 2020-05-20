@@ -163,3 +163,5 @@ test('calls provided handlers',  async () => {
   expect(mockReset).toHaveBeenCalled()
 })
 
+// TODO test speech synthesis
+

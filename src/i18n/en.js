@@ -12,6 +12,8 @@ const en = {
   'hours': 'hours',
   'day': 'day',
   'days': 'days',
+  'speechOn': 'turn on spoken time',
+  'speechOff': 'turn off spoken time',
 }
 
 export default en

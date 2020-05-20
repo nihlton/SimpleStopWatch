@@ -40,9 +40,11 @@ function App() {
       </header>
       <main>
         <section className='event-section'>
-          <strong>Watch events</strong>
+          <header><strong>Watch events</strong></header>
           {watchEvents.map(event => <div key={event.id}>{event.text}</div>)}
-          {watchEvents.length > 0 && <button className='on-foreground' onClick={() => setWatchEvents([])} >clear</button>}
+          {watchEvents.length > 0 && <footer className='text-center'>
+            <button onClick={() => setWatchEvents([])} >clear</button>
+          </footer>}
         </section>
         <section className='component-section'>
           <StopWatch

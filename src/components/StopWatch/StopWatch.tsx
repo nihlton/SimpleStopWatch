@@ -8,7 +8,7 @@ import './StopWatch.scss'
 
 const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
   const { onReset = noOp, onStart = noOp, onPause = noOp, onLap = noOp} = props
-  const [ speakTime, setSpeakTime ] = useState(false)
+  const [ speakTime, setSpeakTime ] = useState(false) // TODO make this a prop?
   const [ startTime, setStartTime ] = useState(0)
   const [ stopTime, setStopTime ] = useState(0)
   const [ isRunning, setIsRunning ] = useState(0)
@@ -18,6 +18,9 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
   const readLapRef = useRef<HTMLDivElement>(null)
 
   const displayTime = (elapsedTime: number) : void => {
+    // convert milliseconds into time segment markup
+    // and push to the time display element
+
     if (displayTimeRef.current) {
       const [ days, hours, minutes, seconds, secondTenths ] = padSegments(parseTime(elapsedTime))
 
@@ -33,6 +36,8 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
   }
 
   const startWatch = () : void => {
+    // record the start time, and start an interval to display elapsed time
+
     const newStartTime = Date.now() - (stopTime - startTime)
     const intervalId = window.setInterval(() => {
       displayTime(Date.now() - newStartTime)
@@ -45,6 +50,10 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
   }
 
   const pauseWatch = () : void => {
+    // record the stop time, and stop the interval.
+    // don't clear anything just yet so the user can
+    // resume the timer.
+
     const rightNow = Date.now()
     const elapsedTime = rightNow - startTime
 
@@ -67,6 +76,8 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
   }
 
   const handleReset = () : void => {
+    // clear everything
+
     window.clearInterval(isRunning)
     displayTime(0)
     setIsRunning(0)
@@ -78,6 +89,9 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
   }
 
   const handleLap = () : void => {
+    // record the time since the last lap (time), and the time
+    // since the timer first started (fromStart).
+
     if (Boolean(isRunning)) {
       const rightNow = Date.now()
       const elapsedTime = rightNow - startTime
@@ -97,6 +111,10 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
   }
 
   const readTime = (elapsedTime : number) : void => {
+    // push the time to an aria-assertive element for screen readers,
+    // and read it allowed if the setting is true and speech synthesis
+    // is support
+
     const timeLanguage = timeToLanguage(elapsedTime)
     if (readTimeRef.current) {
       readTimeRef.current.innerHTML = timeLanguage
@@ -105,6 +123,10 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
   }
 
   const readLap = (elapsedTime : number) : void => {
+    // push the lap time to an aria-assertive element for screen readers,
+    // and read it allowed if the setting is true and speech synthesis
+    // is support
+
     const lapLanguage = `${transText.lap} ${lapTimes.length + 1}, ${timeToLanguage(elapsedTime)}`
     if (readLapRef.current) {
       readLapRef.current.innerHTML = lapLanguage
@@ -113,6 +135,8 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
   }
 
   const timeToLanguage = (elapsedTime : number) : string => {
+    // convert time in milliseconds to something that can be read aloud
+
     const [ days, hours, minutes, seconds, secondTenths ] = parseTime(elapsedTime)
     const daysLang = days ? `${days} ${days > 1 ? transText.days : transText.day}` : ''
     const hoursLang = hours ? `${hours} ${hours > 1 ? transText.hours : transText.hour}` : ''
@@ -130,13 +154,14 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
       className='speak-toggle icon'
       onClick={() => setSpeakTime(!speakTime)}>
       {speakTime ? <i className='fa fa-volume-up' /> : <i className='fa fa-volume-off' />}
-      <span className='sr-only'>toggle speech synthesis</span>
+      {speakTime && <span className='sr-only'>{transText.speechOff}</span>}
+      {!speakTime && <span className='sr-only'>{transText.speechOn}</span>}
     </button>}
 
     <time className='time-display x-large-padding-top' role='timer' >
       <div ref={displayTimeRef} >
         <span className='seconds' >00</span>
-        <span className='second-tenths'>00</span>
+        <span className='second-tenths' >00</span>
       </div>
     </time>
 
