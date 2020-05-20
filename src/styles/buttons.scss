@@ -57,6 +57,11 @@ button, .button {
     --color2: var(--background); // background
   }
 
+  &.icon {
+    min-width: 2.375rem;
+    padding: .6rem;
+  }
+
   &.disabled,
   &[disabled] {
     --color1: var(--copy-color-semi);

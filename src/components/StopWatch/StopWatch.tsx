@@ -127,13 +127,13 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
     <div ref={readLapRef} className='sr-only' aria-live='assertive'/>
 
     {supportsSpeechSynthesis && <button
-      className='speak-toggle'
+      className='speak-toggle icon'
       onClick={() => setSpeakTime(!speakTime)}>
       {speakTime ? <i className='fa fa-volume-up' /> : <i className='fa fa-volume-off' />}
       <span className='sr-only'>toggle speech synthesis</span>
     </button>}
 
-    <time className='time-display large-margin-top' role='timer' >
+    <time className='time-display x-large-padding-top' role='timer' >
       <div ref={displayTimeRef} >
         <span className='seconds' >00</span>
         <span className='second-tenths'>00</span>
