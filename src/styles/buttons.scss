@@ -66,8 +66,6 @@ button, .button {
   &[disabled] {
     --color1: var(--copy-color-semi);
     filter: grayscale(1);
-    background: transparent;
     pointer-events: none;
-    box-shadow: 0 0 0 .125rem var(--color1) inset;
   }
 }

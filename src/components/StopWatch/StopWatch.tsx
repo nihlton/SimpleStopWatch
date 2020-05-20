@@ -144,7 +144,7 @@ const StopWatch:FunctionComponent<StopWatchProps> = function(props) {
       <button className='small on-foreground' onClick={handleReset}>{transText.reset}</button>
       <button
         onClick={handleToggleTime}
-        className={`round on-foreground ${Boolean(isRunning) ? 'toggled' : ''}`}>
+        className='round on-foreground'>
         {Boolean(isRunning) ? <i className='fa fa-pause' /> : <i className='fa fa-play' />}
         {Boolean(isRunning) ? <span className='sr-only'>{transText.pause}</span> : <span className='sr-only'>{transText.play}</span>}
       </button>
