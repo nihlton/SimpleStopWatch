@@ -8,13 +8,12 @@ $boxProps: padding, margin;
 $sides: top, bottom, left, right;
 $sizeValues: (
   no: 0,
-  small: #{'var(--small-grid-unit)'},
-  medium: #{'var(--medium-grid-unit)'},
-  large:#{'var(--large-grid-unit)'},
-  x-large:#{'var(--x-large-grid-unit)'},
-  xx-large:#{'var(--xx-large-grid-unit)'},
+  small: #{'var(--small-grid-unit, .5rem)'},
+  medium: #{'var(--medium-grid-unit, 1rem)'},
+  large:#{'var(--large-grid-unit, 2rem)'},
+  x-large:#{'var(--x-large-grid-unit, 4rem)'},
+  xx-large:#{'var(--xx-large-grid-unit, 8rem)'},
 );
-
 
 :root {
   --orange: rgb(231, 132, 0);

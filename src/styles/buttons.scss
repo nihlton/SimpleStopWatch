@@ -1,7 +1,7 @@
 button, .button {
-  --color1: var(--accent); // text color
-  --color2: var(--foreground); // background
-  --color3: var(--accent); // focus color
+  --color1: var(--accent, #00a0cc); // text color
+  --color2: var(--foreground, white); // background
+  --color3: var(--accent, #00a0cc); // focus color
   cursor: pointer;
   display: inline-block;
   margin: .33rem;
@@ -10,10 +10,10 @@ button, .button {
   padding: .6em 1em;
   font-size: 1.125rem;
   text-transform: uppercase;
-  color: var(--color1);
-  background: var(--color2);
+  color: var(--color1, #00a0cc);
+  background: var(--color2, white);
   position: relative;
-  border-radius: var(--standard-radius);
+  border-radius: var(--standard-radius, .33rem);
   border: none;
   text-decoration: none !important;
   font-weight: 700;
@@ -31,7 +31,7 @@ button, .button {
   &:visited {
     text-decoration: none;
     outline: none;
-    box-shadow: 0 0 0 .125rem var(--color3) inset;
+    box-shadow: 0 0 0 .125rem var(--color3, #00a0cc) inset;
   }
 
   &.big { font-size: 1.5rem; }
@@ -39,10 +39,10 @@ button, .button {
 
 
   &.toggled {
-    color: var(--color2);
-    background: var(--color1);
+    color: var(--color2, white);
+    background: var(--color1, #00a0cc);
 
-    &:focus, &:active { box-shadow: 0 0 0 .125rem var(--color3) inset; }
+    &:focus, &:active { box-shadow: 0 0 0 .125rem var(--color3, #00a0cc) inset; }
   }
 
   &.round {
@@ -53,7 +53,7 @@ button, .button {
   }
 
   &.on-foreground {
-    --color2: var(--background); // background
+    --color2: var(--background, #eee); // background
   }
 
   &.icon {
@@ -63,7 +63,7 @@ button, .button {
 
   &.disabled,
   &[disabled] {
-    --color1: var(--copy-color-semi);
+    --color1: var(--copy-color-semi, #999);
     filter: grayscale(1);
     pointer-events: none;
   }

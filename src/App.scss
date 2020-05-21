@@ -1,23 +1,23 @@
 @import './styles/variables';
 
 .demo-app {
-  background-color: var(--background);
+  background-color: var(--background, white);
   min-height: 100%;
   min-height: stretch;
-  padding: var(--large-grid-unit);
-  color: var(--copy-color);
+  padding: var(--large-grid-unit, 1rem);
+  color: var(--copy-color, #222);
 
   main {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 calc(-1 * var(--medium-grid-unit));
+    margin: 0 calc(-1 * var(--medium-grid-unit, .5rem));
 
     > section {
-      padding: var(--large-grid-unit);
-      margin: var(--medium-grid-unit);
-      border-radius: var(--standard-radius);
-      background-color: var(--foreground);
-      min-width: calc(50% - (2 * var(--medium-grid-unit)));
+      padding: var(--large-grid-unit, 1rem);
+      margin: var(--medium-grid-unit, .5rem);
+      border-radius: var(--standard-radius, .33rem);
+      background-color: var(--foreground, #eee);
+      min-width: calc(50% - (2 * var(--medium-grid-unit, .5rem)));
     }
   }
 }
@@ -27,7 +27,7 @@
   .demo-app {
     main {
       > section {
-        min-width: calc(100% - (2 * var(--medium-grid-unit)));
+        min-width: calc(100% - (2 * var(--medium-grid-unit, .5rem)));
       }
       .component-section { order: 1 }
       .event-section { order: 2 }
@@ -40,7 +40,7 @@
   .demo-app {
     main {
       > section {
-        min-width: calc(50% - (2 * var(--medium-grid-unit)));
+        min-width: calc(50% - (2 * var(--medium-grid-unit, .5rem)));
       }
       .component-section { order: 2 }
       .event-section { order: 1 }
@@ -53,7 +53,7 @@
   .demo-app {
     main {
       > section {
-        min-width: calc(50% - (2 * var(--medium-grid-unit)));
+        min-width: calc(50% - (2 * var(--medium-grid-unit, .5rem)));
       }
       .component-section { order: 2 }
       .event-section { order: 1 }

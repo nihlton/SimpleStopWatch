@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import StopWatch from './components/StopWatch'
-import {lapTime, PREFERRED_THEME, THEMES} from './constants'
+import {lapTime, PREFERRED_THEME, supportsThemes, THEMES} from './constants'
 
 import './App.scss'
 
@@ -29,14 +29,14 @@ function App() {
     <div className={`demo-app ${activeTheme}`}>
       <header className='clear-fix'>
         <h1 className='pull-left'>Stop watch demo</h1>
-        <div className='pull-right'>
+        {supportsThemes && <div className='pull-right'>
           {Object.entries(THEMES).map(([ key, theme ]) => (
             <button
               key={theme.className}
               className={`${activeTheme === theme.className ? 'toggled' : ''}`}
               onClick={() => setActiveTheme(theme.className)}>{key}</button>
           ))}
-        </div>
+        </div>}
       </header>
       <main>
         <section className='event-section'>

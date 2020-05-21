@@ -41,3 +41,5 @@ export type lapTime = {
   time: number,
   fromStart: number
 }
+
+export const supportsThemes = Boolean(window.CSS && CSS.supports('color', 'var(--some-variable)'))
